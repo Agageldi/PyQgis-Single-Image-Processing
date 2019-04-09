@@ -34,9 +34,9 @@ height = -math.degrees(dy/Radius)
 x_scale = width/rx
 y_scale = height/ry
 
-alpha = 30
+alpha = 45
 x_skew = -math.sin(math.radians(alpha)) * x_scale
-y_skew = math.cos(math.radians(alpha)) * y_scale
+y_skew = x_skew#math.cos(math.radians(alpha)) * y_scale
 
 gt = [coor[0]-width/2, x_scale, x_skew, coor[1]-height/2, y_skew, y_scale]
 
