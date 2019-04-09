@@ -30,5 +30,7 @@ def myEXIFdata(src_filename):
     v=tags["Image DateTime"].values
     exif["timestamp"]=datetime.strptime(v,"%Y:%m:%d %H:%M:%S")
     
+    exif["size"] = [tags['Image ImageWidth'].values[0],tags['Image ImageLength'].values[0]]
+    
     f.close()
     return exif

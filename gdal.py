@@ -17,15 +17,16 @@ dst_ds = driver.CreateCopy(dst_filename, src_ds, 0)
 # (uperleftx, scalex, skewx, uperlefty, skewy, scaley)
 # Scale = size of one pixel in units of raster projection
 # this example below assumes 100x100
-coor = myEXIFdata(src_filename)["gps"]
+ex = myEXIFdata(src_filename)
+coor = ex["gps"]
 Radius = 6371000.
 fh = 50.
 
 dx=89.04573706*fh/100
 dy=66.9190639*fh/100
 
-ry=1544.
-rx=2064.
+rx=ex["size"][0]
+ry=ex["size"][1]
 
 width  = math.degrees(dx/(Radius*math.cos(math.radians(coor[0])) ))
 height = -math.degrees(dy/Radius)
