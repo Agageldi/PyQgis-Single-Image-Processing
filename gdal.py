@@ -38,6 +38,11 @@ alpha = 45
 x_skew = -math.sin(math.radians(alpha)) * x_scale
 y_skew = x_skew#math.cos(math.radians(alpha)) * y_scale
 
+alpha += 306.79876698156386
+d=(width**2+height**2)**0.5
+x_coor = coor[0]+d*math.sin(math.radians(alpha))
+y_coor = coor[1]+d*math.cos(math.radians(alpha))
+
 gt = [coor[0]-width/2, x_scale, x_skew, coor[1]-height/2, y_skew, y_scale]
 
 # Set location
