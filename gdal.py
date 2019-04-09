@@ -17,7 +17,7 @@ dst_ds = driver.CreateCopy(dst_filename, src_ds, 0)
 # (uperleftx, scalex, skewx, uperlefty, skewy, scaley)
 # Scale = size of one pixel in units of raster projection
 # this example below assumes 100x100
-coor = myEXIFdata(src_filename)
+coor = myEXIFdata(src_filename)["gps"]
 Radius = 6371000.
 fh = 50.
 

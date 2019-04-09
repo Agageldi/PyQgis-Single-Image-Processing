@@ -1,9 +1,11 @@
 #sudo pip install ExifRead
 import exifread
+from datetime import datetime
 
 def myEXIFdata(src_filename):
     # Open image file for reading (binary mode)
     f = open(src_filename, 'rb')
+    exif={}
 
     # Return Exif tags
     tags = exifread.process_file(f)
@@ -23,4 +25,10 @@ def myEXIFdata(src_filename):
         
     #keys = tags.keys()
     gpsKeys = ['GPS GPSLongitude','GPS GPSLatitude','GPS GPSAltitude']
-    return getValueOfTag(gpsKeys)
+    exif["gps"] = getValueOfTag(gpsKeys)
+    
+    v=tags["Image DateTime"].values
+    exif["timestamp"]=datetime.strptime(v,"%Y:%m:%d %H:%M:%S")
+    
+    f.close()
+    return exif

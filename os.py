@@ -30,3 +30,17 @@ linea.addFeature(feature,True)
 linea.commitChanges()
 iface.zoomToActiveLayer()
 """
+
+#drawing points on the canvas
+"""
+pointa = iface.addVectorLayer("Point?crs=epsg:4326&field=id:integer&index=yes","Pointa","memory")
+pointa.startEditing()
+feature = QgsFeature()
+i=0
+for p in Qpoints:
+    feature.setGeometry(QgsGeometry.fromPoint(p))
+    feature.setAttributes([++i])
+    pointa.addFeature(feature,True)
+pointa.commitChanges()
+iface.zoomToActiveLayer()
+"""
