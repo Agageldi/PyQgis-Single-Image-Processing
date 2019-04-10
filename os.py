@@ -47,12 +47,12 @@ for i in range(len(main_dic)):
         main_dic[main_keys[i]]["azimuth"] = myAzimuth(points[x-1],points[x])/2.+myAzimuth(points[x],points[x+1])/2.    
         
     output = os.path.dirname(main_keys[i]) + "/output/"+ os.path.basename(main_keys[i])
-    myImageGeoReference(main_keys[i],output)
+    #myImageGeoReference(main_keys[i],output)
     
 
 #drawing line on the document
-"""
-linea = iface.addVectorLayer("LineString?crs=epsg:4326&field=id:integer&index=yes","Linea","memory")
+
+linea = iface.addVectorLayer("LineString?crs=epsg:3857&field=id:integer&index=yes","Linea","memory")
 linea.startEditing()
 feature = QgsFeature()
 feature.setGeometry(QgsGeometry.fromPolyline(Qpoints))
@@ -60,18 +60,17 @@ feature.setAttributes([1])
 linea.addFeature(feature,True)
 linea.commitChanges()
 iface.zoomToActiveLayer()
-"""
+
 
 #drawing points on the canvas
-"""
-pointa = iface.addVectorLayer("Point?crs=epsg:4326&field=id:integer&index=yes","Pointa","memory")
+
+pointa = iface.addVectorLayer("Point?crs=epsg:3857&field=id:integer&index=yes","Pointa","memory")
 pointa.startEditing()
 feature = QgsFeature()
 i=0
 for p in Qpoints:
     feature.setGeometry(QgsGeometry.fromPoint(p))
-    feature.setAttributes([++i])
+    feature.setAttributes([38+Qpoints.index(p)])
     pointa.addFeature(feature,True)
 pointa.commitChanges()
 iface.zoomToActiveLayer()
-"""
