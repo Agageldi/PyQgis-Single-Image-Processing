@@ -1,6 +1,13 @@
 #sudo pip install ExifRead
 import exifread
 from datetime import datetime
+from pyproj import Proj
+
+#projection WGS84/Pseudo Mecarto
+p = Proj(init="epsg:3857", preserve_units=False)
+
+
+
 
 def myEXIFdata(src_filename):
     # Open image file for reading (binary mode)
@@ -21,6 +28,7 @@ def myEXIFdata(src_filename):
                 c=v[0].num*1./v[0].den
             coor.append(c)
             
+        coor[0], coor[1] = p(coor[0],coor[1])
         return coor
         
     #keys = tags.keys()

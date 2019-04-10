@@ -20,7 +20,7 @@ dst_ds = driver.CreateCopy(dst_filename, src_ds, 0)
 ex = myEXIFdata(src_filename)
 coor = ex["gps"]
 Radius = 6371000.
-fh = 80.
+fh = 100.
 
 dx=89.04573706*fh/100
 dy=66.9190639*fh/100
@@ -28,26 +28,26 @@ dy=66.9190639*fh/100
 rx=ex["size"][0]
 ry=ex["size"][1]
 
-width  = math.degrees(dx/(  Radius*math.cos( math.radians(coor[1]) )  ))
+width  = math.degrees(dx/Radius)  #(  Radius*math.cos( math.radians(coor[1]) )  ))
 height = -math.degrees(dy/Radius)
 
 x_scale = width/rx
 y_scale = height/ry
 
-alpha = 0
+alpha = 40
 x_skew = -math.sin(math.radians(alpha)) * x_scale
-y_skew = math.sin(math.radians(alpha))  * y_skew#math.cos(math.radians(alpha)) * y_scale
+y_skew = math.sin(math.radians(alpha))  * y_scale#math.cos(math.radians(alpha)) * y_scale
 
 x_scale = math.cos(math.radians(alpha)) * x_scale
 y_scale = math.cos(math.radians(alpha)) * y_scale
 
-#alpha = alpha + 306.79876698156386
-#d=(width**2+height**2)**0.5
-#x_coor = coor[0]+d/2*math.sin(math.radians(alpha))
-#y_coor = coor[1]+d/2*math.cos(math.radians(alpha))
+alpha = alpha + 306.79876698156386
+d=(width**2+height**2)**0.5
+x_coor = coor[0]+d/2*math.sin(math.radians(alpha))-0.000282
+y_coor = coor[1]+d/2*math.cos(math.radians(alpha))-0.00007
 
-x_coor = coor[0]-width/2
-y_coor = coor[1]-height/2
+#x_coor = coor[0]-width/2
+#y_coor = coor[1]-height/2
 
 gt = [x_coor, x_scale, x_skew, y_coor, y_skew, y_scale]
 
