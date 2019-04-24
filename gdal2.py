@@ -48,8 +48,8 @@ def myImageGeoReference(src_filename,dst_filename):
 
     alpha = alpha + 306.79876698156386
     d=(width**2+height**2)**0.5
-    x_coor = coor[0]+d/2*math.sin(math.radians(alpha))-20
-    y_coor = coor[1]+d/2*math.cos(math.radians(alpha))-11.2
+    x_coor = coor[0]+d/2*math.sin(math.radians(alpha))
+    y_coor = coor[1]+d/2*math.cos(math.radians(alpha))
 
     #x_coor = coor[0]-width/2
     #y_coor = coor[1]-height/2

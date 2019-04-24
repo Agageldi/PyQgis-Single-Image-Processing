@@ -46,8 +46,8 @@ for i in range(len(main_dic)):
     else:
         main_dic[main_keys[i]]["azimuth"] = myAzimuth(points[x-1],points[x])/2.+myAzimuth(points[x],points[x+1])/2.    
         
-    output = os.path.dirname(main_keys[i]) + "/output/"+ os.path.basename(main_keys[i])
-    #myImageGeoReference(main_keys[i],output)
+    output = os.path.dirname(main_keys[i]) + "/output3/"+ os.path.basename(main_keys[i])
+    myImageGeoReference(main_keys[i],output)
     
 
 #drawing line on the document
