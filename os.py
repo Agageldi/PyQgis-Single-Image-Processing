@@ -1,7 +1,7 @@
 import os, qgis.core
 from qgis.PyQt.QtCore import QVariant
 
-path = "/media/sf_Kazakhstan_data/08_befliegung/190415/MS/flug_01_02"
+path = "/home/user/temp_shared/Tag04_Flug03/MS"
 #path = "/media/sf_shared/001/output3"
 #get all files from directory
     #azimuth function
@@ -17,15 +17,16 @@ def myAzimuth(a,b):
 Qpoints=[]
 Attributes=[]
 
+main_dic = {}
+points=[]
+file_list=[]
 
 def osLoop(path):
     print path
     file_list0 = os.listdir(path)
     file_list0.sort()
 
-    main_dic = {}
-    points=[]
-    file_list=[]
+
     
     for i in range(len(file_list0)):
         #folder recursively processing
@@ -76,16 +77,18 @@ def osLoop(path):
     
 def draw():
     #drawing points on the canvas
-    pointa = iface.addVectorLayer("Point?crs=epsg:3857&field=id:integer&index=yes","Flug-1 2","memory")
+    shpName = "2_Tag4_Flug3"
+    shpPath = "/media/sf_shared/2_shp/"+shpName+".shp"
+    pointa = iface.addVectorLayer("Point?crs=epsg:3857&field=id:integer&index=yes",shpName,"memory")
     pointa.dataProvider().addAttributes([QgsField("id", QVariant.Int),QgsField("z", QVariant.Double),QgsField("azimuth", QVariant.Double),QgsField("time", QVariant.String),QgsField("Flug", QVariant.String),QgsField("Ort", QVariant.String),QgsField("Hohe", QVariant.Double),QgsField("Speed", QVariant.Double),QgsField("Wetter", QVariant.String),QgsField("LichtSensor", QVariant.String)])
     pointa.updateFields()
     
-    myFlug = 'Flug-1'
-    myOrt = "camp"
-    myHohe = 50
-    mySpeed = 3.9
-    myWetter = 'sonnig'
-    myLichtSensor = 'not connected'
+    myFlug = shpName
+    myOrt = "camp-2"
+    myHohe = 0
+    mySpeed = 0
+    myWetter = ''
+    myLichtSensor = ''
     
     pointa.startEditing()
     feature = QgsFeature()
@@ -93,13 +96,16 @@ def draw():
     Pnum = len(Qpoints)
     for p in Qpoints:
         index = Qpoints.index(p)
-        if Attributes[index]['gps'][2] < medianHeight - 5 and Attributes[index]['id'] < 100 or Attributes[index]['id']> Pnum-100:
-            continue
+        #if Attributes[index]['gps'][2] < medianHeight - 5 and Attributes[index]['id'] < 100 or Attributes[index]['id']> Pnum-100:
+        #    continue
         feature.setGeometry(QgsGeometry.fromPoint(p))
         feature.setAttributes([Attributes[index]['id'],Attributes[index]['gps'][2],Attributes[index]['azimuth'],Attributes[index]['timestamp'].isoformat(),myFlug,myOrt,myHohe,mySpeed,myWetter,myLichtSensor])
         pointa.addFeature(feature,True)
     pointa.commitChanges()
     iface.zoomToActiveLayer()
+    
+    QgsVectorFileWriter.writeAsVectorFormat(pointa,shpPath,"utf-8",None,"ESRI Shapefile")
+    
     """
     #drawing line on the document
     linea = iface.addVectorLayer("LineString?crs=epsg:3857&field=id:integer&index=yes","Linea","memory")
@@ -111,6 +117,7 @@ def draw():
     linea.commitChanges()
     iface.zoomToActiveLayer()
     """
+    
 
 osLoop(path)
 draw()
